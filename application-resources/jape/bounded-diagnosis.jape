@@ -1,0 +1,17 @@
+Phase: BoundedDiagnosis
+Input: Token PreCode Punct Split 
+       AnySemicolons
+       DiagnosisAlmost Negative Differential Diagnosis
+Options: control = appelt
+
+
+Rule: BoundedPrecodedDiagnosis
+(
+  ({AnySemicolons})
+  {PreCode}
+  ({Punct, !Split})?
+  ({DiagnosisAlmost.coded == "true", !Diagnosis}):match
+  ({AnySemicolons})
+)
+-->
+:match.pDiagnosis = { rule = "BoundedPrecodedDiagnosis" }

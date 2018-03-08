@@ -1,1 +1,32 @@
+Phase: BadApostrophe
+Input: Token SpaceToken
+Options: control = appelt
+
+
+Rule: BadApostropheS
+({Token.string == "&"}{Token.string == "#"}
+ {Token.string == "8217"}{Token.string == ";"}
+ {Token.string == "s"}
+):match
+-->
+:match.Token = {category = "POS",
+                orth = "apostrophe",
+                string = "'s",
+                kind = "word",
+                length = "8",
+                rule = "BadApostropheS"},
+:match.BadApostrophe = {rule = "BadApostropheS"}
+
+
+Rule: BadApostrophe
+({Token.string == "&"}{Token.string == "#"}
+ {Token.string == "8217"}{Token.string == ";"}
+):match
+-->
+:match.Token = {category = "POS",
+                string = "'",
+                kind = "punctuation",
+                length = "7",
+                rule = "BadApostrophe"},
+:match.BadApostrophe = {rule = "BadApostrophe"}
 

@@ -1,0 +1,121 @@
+Phase: Diagnosis
+Input: PreDiagnosis DiagnosisAlmost Split Nil Patient MidDiagnosis 
+       Negative OtherPeople Differential BlockedPast
+       Diagnosis PostNegative And PossessivePreDiagnosis
+Options: control = appelt
+
+
+Rule: NotPreDiagnosisDiagnosis
+(
+ ({Negative}|{OtherPeople})+
+ {PreDiagnosis}
+  ({DiagnosisAlmost, !Diagnosis}):match
+)
+-->
+:match.NotDiagnosis = { rule = "NotPreDiagnosisDiagnosis" }
+
+
+Rule: PreDiagnosisDiagnosisPostNegative
+(
+	{PreDiagnosis}
+	({DiagnosisAlmost, !Diagnosis}):match
+	{PostNegative}
+)
+-->
+:match.NotDiagnosis = { rule = "PreDiagnosisDiagnosisPostNegative" }
+
+
+Rule: NotMidDiagnosisDiagnosis
+(
+ ({Negative}|{OtherPeople})+
+ ({MidDiagnosis})+
+ ({DiagnosisAlmost, !Diagnosis}):match
+)
+-->
+:match.NotDiagnosis = { rule = "NotMidDiagnosisDiagnosis" }
+
+
+Rule: PreDiagnosisNotDiagnosis
+(
+ {PreDiagnosis}
+ ({Negative})+
+ ({DiagnosisAlmost, !Diagnosis}):match
+)
+-->
+:match.NotDiagnosis = { rule = "PreDiagnosisNotDiagnosis" }
+
+
+Rule: PreDiagnosisDiagnosis
+(
+  {PreDiagnosis}
+  ({DiagnosisAlmost, !Diagnosis}):match
+)
+-->
+:match.pDiagnosis = { rule = "PreDiagnosisDiagnosis" }
+
+
+Rule: PreDiagnosisDiagnosisDouble
+(
+  {PreDiagnosis}
+  ({DiagnosisAlmost, !Diagnosis}):match0
+  {And}
+  ({DiagnosisAlmost, !Diagnosis}):match1
+)
+-->
+:match0.pDiagnosis = { rule = "PreDiagnosisDiagnosisDouble0" },
+:match1.pDiagnosis = { rule = "PreDiagnosisDiagnosisDouble1" }
+
+
+Rule: DifferentialDiagnosis
+(
+  (({PreDiagnosis}{Differential})|
+   ({Differential}{PreDiagnosis})|
+   ({Differential}{PossessivePreDiagnosis}) )
+  ({DiagnosisAlmost, !Diagnosis}):match
+)
+-->
+:match.NotDiagnosis = { rule = "DifferentialDiagnosis" }
+
+
+Rule: PreDiagnosisNil
+(
+  {PreDiagnosis}
+  ({Nil}):match
+)
+-->
+:match.NilDiagnosis = { rule = "PreDiagnosisNil" }
+
+
+Rule: NegativePatientMidDiagnosisDiagnosis
+(
+  {Negative}
+  {Patient}
+  ({MidDiagnosis})+
+  ({DiagnosisAlmost, !Diagnosis}):match
+)
+-->
+:match.NotDiagnosis = { rule = "NegativePatientMidDiagnosisDiagnosis" }
+
+
+Rule: PatientBlockedPastDiagnosis
+(
+  {Patient}
+  {BlockedPast}
+  ({PreDiagnosis}|{MidDiagnosis})*
+  ({DiagnosisAlmost, !Diagnosis}):match
+)
+-->
+:match.NotDiagnosis = {rule = "PatientBlockedPastDiagnosis"}
+
+
+/*  Removed while working on batch 4 with stricter annotation
+
+Rule: PatientMidDiagnosisDiagnosis
+(
+  {Patient}
+  ({MidDiagnosis})+
+  ({DiagnosisAlmost}):match
+)
+-->
+:match.Diagnosis = { rule = "PatientMidDiagnosisDiagnosis" }
+*/

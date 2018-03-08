@@ -1,0 +1,28 @@
+/*
+*  main.jape
+*/
+
+MultiPhase:	DiagnosisMultiPhase
+Phases: 
+lookups
+semicolons
+entities
+bad-apostrophe
+closed-class
+lookups1
+lookups2
+lookups3
+lookups4
+extend-differential
+number-punct
+numbers
+icd-10
+type-and-code
+block-past
+strong-diagnosis
+bounded-diagnosis
+diagnosis
+DiagnosisExclude2
+/* whole-sentence */
+text-feature
+

@@ -1,0 +1,12 @@
+Phase: Lookups2AxisForm
+Input: Lookup Split
+Options: control = brill
+
+
+Rule: AxisForm
+(
+ ({Lookup.majorType == "axis", Lookup.minorType == "a"})
+ ({Lookup.majorType == "axis", Lookup.minorType == "b"})+
+):match
+-->
+:match.PreDiagnosis = {rule = AxisForm}

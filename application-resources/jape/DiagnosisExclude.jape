@@ -1,0 +1,13 @@
+Phase: DiagnosisExclude
+Input: Diagnosis Token
+Options: control = appelt
+
+
+Rule: DiagnosisCodeBracketed
+(
+
+	({Diagnosis notContains Token.string == "Lewy"})
+	
+):match
+-->
+:match.Diagnosis1 = {}

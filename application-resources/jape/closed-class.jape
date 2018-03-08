@@ -1,0 +1,40 @@
+Phase: ClosedClass
+Input: Entity Split Token
+Options: control = appelt
+
+
+Rule: Entity
+Priority: 10
+(({Entity})+):match
+-->
+{}
+
+
+Rule: TokenClosedClass
+Priority: 5
+({Token.category == "DT"}|
+ {Token.category == "IN"}|
+ {Token.category == "CC"}|
+ {Token.category == "TO"}
+):match
+-->
+:match.ClosedClass = {rule = "TokenClosedClass"}
+
+
+Rule: PastTense
+Priority: 5
+({Token.category == "VBD"}):match
+-->
+:match.PastTense = {rule = "PastTense"}
+
+
+Rule: PerfectTense
+Priority: 5
+(
+  ({Token.root == "have"}|
+   {Token.root == "has"}|
+   {Token.root == "had"})
+  {Token.category == "VBN"}
+):match
+-->
+:match.PastTense = {rule = "PerfectTense"}

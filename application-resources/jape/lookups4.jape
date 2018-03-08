@@ -1,0 +1,21 @@
+Phase: Lookups4TypeNumbers
+Input: Split Token Type
+Options: control = appelt
+
+
+Rule: TypeNumber
+(
+	{Type}
+	{Token.kind == "number"}
+):match
+-->
+:match.DiagnosisPart = { rule = "TypeNumber" }
+
+
+Rule: TypeNumber
+(
+	{Type}
+	{Token.string ==~ "(XVI)+"}
+):match
+-->
+:match.DiagnosisPart = { rule = "TypeNumberRoman" }

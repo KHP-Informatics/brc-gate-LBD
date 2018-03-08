@@ -1,0 +1,34 @@
+Phase: Semicolons
+Input: Split Token SpaceToken SemicolonBlock
+Options: control = appelt
+
+// moved this rule to groovy PR to keep it from
+// blowing up on zillions of semicolons
+
+// /* At least 3 semicolons in a row 
+//    (maybe it should be 4)
+//    */
+// Rule: Semicolons
+// ( {Token.string == ";"}
+//   {Token.string == ";"}
+//   ({Token.string == ";"})+
+// ):match
+// -->
+// :match.SemicolonBlock = {rule = "Semicolons"}
+
+
+Rule: Nil
+({SemicolonBlock})
+-->
+{}
+
+
+/* Moved Punct here from lookups.jape to keep blocks of 
+   semicolons from generating it.
+   */
+
+Rule: TokenPunct
+({Token.kind == "punctuation"}):match
+-->
+:match.Punct = {rule = TokenPunct,
+	        category = :match.Token.category}

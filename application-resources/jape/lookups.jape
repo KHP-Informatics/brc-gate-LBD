@@ -1,0 +1,125 @@
+Phase: Lookups
+Input: Lookup Split Token
+Options: control = all
+
+
+Rule: LookupPreDiagnosis
+({Lookup.majorType == "preDiagnosis"}):match
+-->
+:match.PreDiagnosis = {rule = LookupPreDiagnosis}
+
+
+Rule: LookupAxisPreDiagnosis
+({Lookup.majorType == "axis", Lookup.minorType == "preDiagnosis" }):match
+-->
+:match.AxisPreDiagnosis = {rule = "LookupAxisPreDiagnosis"}
+
+
+Rule: LookupDifferential
+({Lookup.majorType == "differential"}):match
+-->
+:match.Differential = {rule = LookupDifferential}
+
+
+Rule: LookupPreCode
+({Lookup.majorType == "preCode"}):match
+-->
+:match.PreCode = {rule = LookupPreCode}
+
+
+Rule: LookupAnd
+({Lookup.majorType == "and"}):match
+-->
+:match.And = {rule = LookupAnd}
+
+
+Rule: LookupType
+({Lookup.majorType == "type"}):match
+-->
+:match.Type = {rule = LookupType}
+
+
+/*
+Rule: LookupMidDiagnosis
+({Lookup.majorType == midDiagnosis}):match
+-->
+:match.MidDiagnosis = {rule = LookupMidDiagnosis}
+*/
+
+
+Rule: LookupICD10Whole
+({Lookup.majorType == ICD10, Lookup.minorType == whole}):match
+-->
+:match.DiagnosisWhole = { rule = "LookupICD10Whole"}
+
+
+Rule: LookupICD10Part
+({Lookup.majorType == ICD10, Lookup.minorType == part}):match
+-->
+:match.DiagnosisPart = { rule = "LookupICD10Part"}
+
+
+Rule: LookupExtraPart
+({Lookup.majorType == "extra", Lookup.minorType == "part"}):match
+-->
+:match.DiagnosisPart = {rule = LookupExtraPart}
+
+
+Rule: LookupBlockPast
+({Lookup.majorType == "block-past"}):match
+-->
+:match.BlockPast = {rule = LookupBlockPast}
+
+
+Rule: LookupExtraWhole
+({Lookup.majorType == "extra", Lookup.minorType == "whole"}):match
+-->
+:match.DiagnosisWhole = {rule = LookupExtraWhole}
+
+
+Rule: LookupPositive
+({Lookup.majorType == positive}):match
+-->
+:match.Positive = {rule = LookupPositive}
+
+
+Rule: LookupNegative
+({Lookup.majorType == negative}):match
+-->
+:match.Negative = {rule = LookupNegative}
+
+
+Rule: LookupPostNegative
+({Lookup.majorType == "post-negative"}):match
+-->
+:match.PostNegative = {rule = LookupPostNegative}
+
+
+Rule: LookupNil
+({Lookup.majorType == nil}):match
+-->
+:match.Nil = {rule = LookupNil}
+
+
+Rule: LookupNil
+({Lookup.majorType == nil}):match
+-->
+:match.Nil = {rule = LookupNil}
+
+
+Rule: LookupDiagnosisPrefix
+({Lookup.majorType == "diagnosis", Lookup.minorType == "prefix"}):match
+-->
+:match.DiagnosisPrefix = { rule = "LookupDiagnosisPrefix" }
+
+
+Rule: LookupDiagnosisSuffix
+({Lookup.majorType == "diagnosis", Lookup.minorType == "suffix"}):match
+-->
+:match.DiagnosisSuffix = { rule = "LookupDiagnosisSuffix" }
+
+
+Rule: LookupDiagnosisTrailer
+({Lookup.majorType == "diagnosis", Lookup.minorType == "trailer"}):match
+-->
+:match.DiagnosisTrailer = { rule = "LookupDiagnosisTrailer" }

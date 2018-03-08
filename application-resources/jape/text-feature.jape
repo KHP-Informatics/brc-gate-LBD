@@ -1,0 +1,19 @@
+Phase: TextFeature
+Input: cDiagnosis Token
+Options: control = all
+
+
+/*  Add a "text" feature containing the underlying text.
+    */
+
+
+Rule: DiagnosisText
+(
+	({cDiagnosis}):match
+)
+-->
+:match  {
+	Annotation diagnosis = matchAnnots.iterator().next();
+	String text = gate.Utils.stringFor(doc, diagnosis);
+	diagnosis.getFeatures().put("text", text);
+}

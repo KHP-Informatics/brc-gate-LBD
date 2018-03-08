@@ -1,0 +1,67 @@
+Phase: FNumber
+Input: Number Token PreCode Split
+Options: control = appelt
+
+
+/*Rule: DiagnosisCodeBracketed
+(
+	/* sometimes "FO1" instead of "F01"!  */
+	({Token.string == "("}|{Token.string == "["})
+	({Token.string == "F"}|{Token.string == "FO"})
+	{Number}
+	({Token.string == ")"}|{Token.string == "]"})
+):match
+-->
+:match.DiagnosisCode = {rule = DiagnosisCodeBracketed}*/
+
+
+/*Rule: DiagnosisCode
+(
+	/* sometimes "FO1" instead of "F01"!  */
+	({Token.string == "F"}|{Token.string == "FO"})
+	{Number}
+):match
+-->
+:match.DiagnosisCode = {rule = DiagnosisCode}*/
+
+
+/*Rule: DiagnosisPreCodeCodeBracketed
+(
+	/* sometimes "FO1" instead of "F01"!  */
+	({Token.string == "("}|{Token.string == "["})
+	{PreCode}
+	({Token.string == ":"}|{Token.string == ","}|{Token.string == "-"})?
+	({Token.string == "F"}|{Token.string == "FO"})
+	{Number}
+	({Token.string == ")"}|{Token.string == "]"})
+):match
+-->
+:match.DiagnosisCode = {rule = DiagnosisPreCodeBracketed}*/
+
+
+Rule: DiagnosisPreCodeCode
+(
+	/* sometimes "FO1" instead of "F01"!  */
+	{PreCode}
+	({Token.string == ":"}|{Token.string == ","}|{Token.string == "-"})?
+	({Token.string == "F"}|{Token.string == "FO"})
+	{Number}
+):match
+-->
+:match.DiagnosisCode = {rule = DiagnosisPreCodeBracketed}
+
+
+Rule: DiagnosisCodePreCodeBracketed
+(
+	/* sometimes "FO1" instead of "F01"!  */
+	({Token.string == "("}|{Token.string == "["})
+	({Token.string == "F"}|{Token.string == "FO"})
+	{Number}
+	({Token.string == ":"}|{Token.string == ","}|{Token.string == "-"})?
+	{PreCode}
+	({Token.string == ")"}|{Token.string == "]"})
+):match
+-->
+:match.DiagnosisCode = {rule = DiagnosisCodePreCodeBracketed}
+
+

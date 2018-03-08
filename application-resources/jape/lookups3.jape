@@ -1,0 +1,26 @@
+Phase: Lookups3StrongPreDiagnosis
+Input: Split Token PreDiagnosis Differential 
+       Punct PreCode AnySemicolons
+Options: control = appelt
+
+
+// another perverse-semicolon bug
+Rule: StrongPreDiagnosis
+(
+  ({AnySemicolons})?
+  ({Token.category == "JJ", !Differential})*
+  ({PreCode})?
+  {PreDiagnosis}
+  ({Punct, !Split}|{AnySemicolons})*
+):match
+-->
+:match.StrongPreDiagnosis = {rule = "StrongPreDiagnosis"}
+
+
+Rule: PossessivePreDiagnosis
+(
+  {Token.category == "PRP$"}
+  {PreDiagnosis}
+):match
+-->
+:match.PossessivePreDiagnosis = {rule = "PossessivePreDiagnosis"}

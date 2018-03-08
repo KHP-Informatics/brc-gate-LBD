@@ -1,0 +1,51 @@
+Phase: TypeCode
+Input: DiagnosisCode DiagnosisType ClosedClass Punct Split 
+       DiagnosisTrailer DiagnosisPart
+Options: control = appelt
+
+
+Rule: TypeCode
+(
+ {DiagnosisType}
+ ({ClosedClass}|{Punct, !Split})*
+ {DiagnosisCode}
+):match
+-->
+:match.DiagnosisAlmost = { rule = "TypeCode", coded = "true" }
+
+
+Rule: CodeType
+(
+ {DiagnosisCode}
+ ({ClosedClass}|{Punct, !Split})*
+ {DiagnosisType}
+):match
+-->
+:match.DiagnosisAlmost = { rule = "CodeType", coded = "true" }
+
+
+Rule: Type
+({DiagnosisType}):match
+-->
+:match.DiagnosisAlmost = { rule = "Type" }
+
+
+Rule: Code
+({DiagnosisCode}):match
+-->
+:match.DiagnosisAlmost = { rule = "Code", coded = "true" }
+
+
+Rule: TypeCodeTrailer
+(
+ {DiagnosisType}
+ ({ClosedClass}|{Punct, !Split})*
+ {DiagnosisCode}
+ ({Punct, !Split})*
+ ({DiagnosisPart})[0,2]
+ {DiagnosisTrailer}
+):match
+-->
+:match.DiagnosisAlmost = { rule = "TypeCodeTrailer", coded = "true" }
+
+

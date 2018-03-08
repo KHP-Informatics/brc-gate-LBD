@@ -1,0 +1,52 @@
+Phase: StrongDiagnosis
+Input: StrongPreDiagnosis DiagnosisAlmost Split Negative 
+       Differential AxisPreDiagnosis Token
+       AnySemicolons
+Options: control = appelt
+
+
+Rule: StrongPreDiagnosisDiagnosis
+(
+  {StrongPreDiagnosis}
+  ({DiagnosisAlmost}):match
+)
+-->
+:match.pDiagnosis = { rule = "StrongPreDiagnosisDiagnosis" }
+
+
+Rule: StrongPreDiagnosisDiagnosisDouble
+(
+  {StrongPreDiagnosis}
+  ({DiagnosisAlmost}):match0
+  ({AnySemicolons})?
+  ({DiagnosisAlmost}):match1
+)
+-->
+:match0.pDiagnosis = { rule = "StrongPreDiagnosisDiagnosisDouble0" },
+:match1.pDiagnosis = { rule = "StrongPreDiagnosisDiagnosisDouble1" }
+
+
+Rule: StrongPreDiagnosisDiagnosisTriple
+(
+  {StrongPreDiagnosis}
+  ({DiagnosisAlmost}):match0
+  ({AnySemicolons})?
+  ({DiagnosisAlmost}):match1
+  ({AnySemicolons})?
+  ({DiagnosisAlmost}):match2
+)
+-->
+:match0.pDiagnosis = { rule = "StrongPreDiagnosisDiagnosisTriple0" },
+:match1.pDiagnosis = { rule = "StrongPreDiagnosisDiagnosisTriple1" },
+:match2.pDiagnosis = { rule = "StrongPreDiagnosisDiagnosisTriple2" }
+
+
+Rule: AxisPreDiagnosisCoded
+(
+  {AxisPreDiagnosis}
+  ({AnySemicolons})?
+  ({DiagnosisAlmost.coded == "true"}):match
+)
+-->
+:match.pDiagnosis = { rule = "AxisPreDiagnosisCoded" }
+

@@ -1,0 +1,20 @@
+Phase: Lookups1PatientOther
+Input: Lookup Split Token
+Options: control = appelt
+
+
+Rule: LookupPatient
+(({Lookup.majorType == "patient"})+):match
+-->
+:match.Patient = {rule = "LookupPatient"}
+
+
+Rule: LookupPatientOther
+(
+ ({Lookup.majorType == "patient"})*
+ ({Token.category ==~ "POS"})?
+ ({Token.category ==~ "JJ.*"})*
+ ({Lookup.majorType == "other_people"})+
+):match
+-->
+:match.OtherPeople = {rule = "LookupPatientOther"}

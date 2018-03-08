@@ -1,0 +1,13 @@
+Phase: DiagnosisExclude
+Input: pDiagnosis  Token
+Options: control = appelt
+
+
+Rule: DiagnosisCodeBracketed
+(
+
+	({pDiagnosis contains Token.string ==~"(?i)Lewy"})
+	
+):match
+-->
+:match.cDiagnosis = {rule = "Includefin"}

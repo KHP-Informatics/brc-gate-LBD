@@ -1,0 +1,35 @@
+Phase: Numbers
+Input: NumbersInWords NumberPunct SpaceToken NumberDigits
+Options: control = appelt
+
+
+
+
+Rule: NumbersInWords
+({NumbersInWords}):match
+-->
+:match.Number = {rule = "NumbersInWords",
+                   value = :match.NumbersInWords.value }
+
+
+Rule: NumberDigits
+(
+ {NumberDigits}
+ ({NumberPunct}{NumberDigits})*
+):match
+-->
+:match {
+  Long start = matchAnnots.firstNode().getOffset();
+  Long end   = matchAnnots.lastNode().getOffset();
+  String string = gate.Utils.stringFor(doc, matchAnnots);
+  FeatureMap features = Factory.newFeatureMap();
+  features.put("rule", "NumberDigits");
+  features.put("value", string);
+
+  try {
+    outputAS.add(start, end, "Number", features);
+  }
+  catch (InvalidOffsetException e) {
+    e.printStackTrace();
+  }
+}
