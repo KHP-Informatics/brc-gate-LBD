@@ -1,9 +1,0 @@
-Phase: BlockPast
-Input: PastTense BlockPast
-Options: control = appelt
-
-
-Rule: BlockedPast
-({PastTense}{BlockPast}):match
--->
-:match.BlockedPast = {rule = "BlockedPast"}
